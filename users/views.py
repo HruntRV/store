@@ -16,10 +16,11 @@ def login(request):
             if user:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
-
+            else:
+                form.add_error(None, "Invalid username or password.")
     else:
-        form = UserLoginForm
-    context = {'form': UserLoginForm()}
+        form = UserLoginForm()
+    context = {'form': form}
     return render(request, 'users/login.html', context)
 
 
