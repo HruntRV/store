@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DOMAIN_NAME = 'http://localhost:8000'  # для формирования полного пути  verification_link в users.models для верификации почты
 
 # Application definition
 
@@ -107,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'uk'
 
-TIME_ZONE = 'Europe/Kiev'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -132,3 +133,6 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/users/login/'  # redirect на страницу входа/регистрации для работы декоратора @login required
 LOGIN_REDIRECT_URL = '/'  # для редиректа на главную, при использовании ClassBasedView UserLoginView(LoginView)
 LOGOUT_REDIRECT_URL = '/'  # для редиректа на главную, при использовании встроенного LogoutView
+
+#sending email
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # настройка для отправки сообщений в консоль для тестов
