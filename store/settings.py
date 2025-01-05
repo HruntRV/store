@@ -135,4 +135,10 @@ LOGIN_REDIRECT_URL = '/'  # для редиректа на главную, пр�
 LOGOUT_REDIRECT_URL = '/'  # для редиректа на главную, при использовании встроенного LogoutView
 
 #sending email
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # настройка для отправки сообщений в консоль для тестов
+#EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # настройка для отправки сообщений в консоль для тестов
+EMAIL_HOST_USER = 'elerom.dp@gmail.com'
+EMAIL_HOST_PASSWORD = 'uzzauiokqkscxmil'
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+
