@@ -12,7 +12,7 @@ urlpatterns = [
     # path('profile/', profile, name='profile'),
     path('profile/<int:pk>/', login_required(UserProfileView.as_view()), name='profile'),
     # path('logout/', logout, name='logout'),
-    path('logout/', LogoutView.as_view(), name='logout'), # встроенный Logout
-    path('verify/<str:email>/<uuid:code>/', EmailVerificationView.as_view(), name='email_verification')
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('verify/<str:email>/<uuid:code>/', EmailVerificationView.as_view(), name='email_verification'),
 
 ]
