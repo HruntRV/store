@@ -39,13 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+
+     'debug_toolbar',
     
     'products',
+    'orders',
     'users',
 
 ]
@@ -58,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 
     "allauth.account.middleware.AccountMiddleware",
 ]
@@ -75,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'products.context_processors.baskets',
             ],
         },
     },
@@ -82,6 +89,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'store.wsgi.application'
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -148,12 +169,12 @@ LOGIN_REDIRECT_URL = '/'  # для редиректа на главную, пр�
 LOGOUT_REDIRECT_URL = '/'  # для редиректа на главную, при использовании встроенного LogoutView
 
 #sending email
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # настройка для отправки сообщений в консоль для тестов
-# EMAIL_HOST_USER = 'elerom.dp@gmail.com'
-# EMAIL_HOST_PASSWORD = 'uzzauiokqkscxmil'
-# EMAIL_PORT = 587
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_USE_TLS = True
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # настройка для отправки сообщений в консоль для тестов
+EMAIL_HOST_USER = 'elerom.dp@gmail.com'
+EMAIL_HOST_PASSWORD = 'uzzauiokqkscxmil'
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
 
 
 # AllAuth
@@ -174,3 +195,9 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
     }
 }
+# Celery
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+

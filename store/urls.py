@@ -19,8 +19,6 @@ from django.urls import path, include
 from django.conf.urls.static import static # для медиа файлов
 from django.conf import settings # для медиа файлов
 
-
-# from products.views import index
 from products.views import IndexView
 
 
@@ -31,8 +29,11 @@ urlpatterns = [
     path('products/', include('products.urls', namespace='products')),
     path('users/', include('users.urls', namespace='users')),
     path('accounts/', include('allauth.urls')),
+    path('orders/', include('orders.urls', namespace='orders')),
+
 
 ]
 
 if settings.DEBUG:
+    urlpatterns.append(path('__debug__/', include('debug_toolbar.urls'))),
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
