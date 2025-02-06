@@ -73,7 +73,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
 
-     'debug_toolbar',
+     # 'debug_toolbar',
     
     'products',
     'orders',
@@ -93,7 +93,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 
     "allauth.account.middleware.AccountMiddleware",
 ]
@@ -190,7 +190,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR/'static']
+STATICFILES_DIRS = [
+    BASE_DIR/'static',
+    ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # for collectstatic command/ all static will collect here
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

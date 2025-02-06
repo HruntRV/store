@@ -41,13 +41,13 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профиль</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профіль</a>
                         </li>
-                        <li><a class="dropdown-item" href="orders/orders.html">Заказы</a></li>
+                        <li><a class="dropdown-item" href="orders/orders.html">Замовлення</a></li>
                         {% if user.is_superuser or user.is_staff %}
                         <li>
                             <a class="dropdown-item" href="{% url 'admin:index' %}">
-                                Админ-панель
+                                Адмін-панель
                             </a>
                         </li>
                         {% endif %}
@@ -57,14 +57,14 @@
                         <li>{# заменил тег а на <form> так как встроенный login view требует Post метод, а тег а выполняет Get #}
                             <form method="post" action="{% url 'users:logout' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="dropdown-item">Выйти</button>
+                                <button type="submit" class="dropdown-item">Вийти</button>
                             </form>
                         </li>
                     </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
+                    <a class="nav-link" href="{% url 'users:login' %}">Вхід <i class="fas fa-sign-in-alt"></i></a>
                 </li>
                 {% endif %}
             </ul>

@@ -9,10 +9,10 @@ from users.tasks import send_email_verification
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите имя пользователя'
+        'class': 'form-control py-4', 'placeholder': 'Введіть ім\'я користувача'
         }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите пароль'
+        'class': 'form-control py-4', 'placeholder': 'Введіть пароль'
         }))
 
     class Meta:
@@ -22,23 +22,23 @@ class UserLoginForm(AuthenticationForm):
 
 class UserRegistrationForm(UserCreationForm):
     firstname = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите имя'
+        'class': 'form-control py-4', 'placeholder': 'Введіть ім\'я'
     }))
     lastname = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите фамилию'
+        'class': 'form-control py-4', 'placeholder': 'Введіть прізвище'
     }))
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите имя пользователя',
+        'class': 'form-control py-4', 'placeholder': 'Введіть ім\'я користувача',
         # 'aria-describedby': 'usernameHelp'
     }))
     email = forms.CharField(widget=forms.EmailInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Адрес электронной почты'
+        'class': 'form-control py-4', 'placeholder': 'Адреса електронної скриньки'
     }))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите пароль'
+        'class': 'form-control py-4', 'placeholder': 'Введіть пароль'
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Подтвердите пароль'
+        'class': 'form-control py-4', 'placeholder': 'Підтвердіть пароль'
     }))
 
     class Meta:
