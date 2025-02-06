@@ -32,6 +32,7 @@ env = environ.Env(
     EMAIL_PORT=(int),
     EMAIL_HOST=(str),
     EMAIL_USE_TLS=(bool),
+    DATABASE_URL=(str),  # for Render PostgreSQL database
 
 )
 
@@ -141,7 +142,7 @@ CACHES = {
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+'''
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -151,6 +152,14 @@ DATABASES = {
         "HOST": env('DATABASE_HOST'),
         "PORT": env('DATABASE_PORT'),
     }
+}
+'''
+# Render Postgre database
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL'))
+
 }
 
 # Password validation
