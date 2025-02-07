@@ -33,7 +33,7 @@ env = environ.Env(
     EMAIL_HOST=(str),
     EMAIL_USE_TLS=(bool),
     DATABASE_URL=(str),  # for Render PostgreSQL database
-    USE_S3=(bool, False),
+    USE_S3=(bool, True),
 
 
 )
@@ -212,8 +212,7 @@ if USE_S3:
     AWS_DEFAULT_ACL = None
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
-    STATIC_ROOT = None
-    MEDIA_ROOT = None
+
 else:
     STATIC_URL = 'static/'
     STATICFILES_DIRS = [
