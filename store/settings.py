@@ -204,6 +204,13 @@ STATICFILES_DIRS = [
     ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # for collectstatic command/ all static will collect here
 
+#  for storage in whitenoice backend
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
