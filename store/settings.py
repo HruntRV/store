@@ -33,6 +33,8 @@ env = environ.Env(
     EMAIL_HOST=(str),
     EMAIL_USE_TLS=(bool),
     DATABASE_URL=(str),  # for Render PostgreSQL database
+    USE_S3=(bool, False),
+
 
 )
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -198,7 +200,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-USE_S3 = env.bool("USE_S3", default=False)
+USE_S3 = env('USE_S3')
 if USE_S3:
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
