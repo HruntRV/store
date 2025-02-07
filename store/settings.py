@@ -205,10 +205,12 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # for collectstatic command/ all static will collect here
 
 #  for storage in whitenoice backend
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
+STATICFILES_STORAGE = {
+    "default": {
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 }
 
 # Default primary key field type
