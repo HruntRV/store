@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
 import environ
+import dj_database_url
+import os
 
 
 env = environ.Env(
@@ -39,7 +40,6 @@ env = environ.Env(
 )
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Take environment variables from .env file
 environ.Env.read_env(BASE_DIR / '.env')
 
@@ -90,7 +90,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -159,7 +158,7 @@ DATABASES = {
 }
 '''
 # Render Postgre database
-import dj_database_url
+
 
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL'))
@@ -202,35 +201,47 @@ USE_TZ = True
 
 USE_S3 = env('USE_S3')
 if USE_S3:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-    AWS_LOCATION = "static"
+    AWS_S3_REGION_NAME = "eu-north-1"
+    AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = None
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+
+    STORAGES = {
+        # Media Files
+        "default": {
+            "BACKEND": "store.custom_storages.MediaStorage",
+            "OPTIONS": {
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "region_name": AWS_S3_REGION_NAME,
+                "default_acl": "public-read",
+                "file_overwrite": False,
+            },
+        },
+        # Static Files
+        "staticfiles": {
+            "BACKEND": "store.custom_storages.StaticStorage",
+            "OPTIONS": {
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "region_name": AWS_S3_REGION_NAME,
+                "default_acl": "public-read",
+                "file_overwrite": False,
+            },
+        },
+    }
+
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
 
 else:
-    STATIC_URL = 'static/'
-    STATICFILES_DIRS = [
-        BASE_DIR/'static',
-        ]
-    STATIC_ROOT = BASE_DIR / 'staticfiles'  # for collectstatic command/ all static will collect here
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
-
-
-#  for storage in whitenoice backend
-# STATICFILES_STORAGE = {
-#     "default": {
-#         "staticfiles": {
-#             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#         },
-#     }
-# }
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+    STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

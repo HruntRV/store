@@ -10,6 +10,16 @@ from common.views import TitleMixin
 
 from django.core.cache import cache
 
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
+
+def test_upload():
+    # Create a test file
+    path = default_storage.save('test-media/test.txt', ContentFile('test content'))
+    print(f"File uploaded to: {path}")
+    print(f"File URL: {default_storage.url(path)}")
+
 
 class IndexView(TitleMixin, TemplateView):
     template_name = 'products/index.html'
