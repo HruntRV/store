@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 import stripe
 
 from products.models import Basket
+from orders.models import Order
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -50,6 +51,7 @@ class OrderCreateView(TitleMixin, CreateView):
 
 @csrf_exempt
 def stripe_webhook_view(request):
+    print("Webhook received")
     payload = request.body
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
     event = None
@@ -64,18 +66,22 @@ def stripe_webhook_view(request):
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
         return HttpResponse(status=400)
+    if event['type'] in ['checkout.session.completed', 'checkout.session.async_payment_succeeded']:
+        session = event['data']['object']
+        session_id = session.get('id')  # Get Stripe session ID
 
-    if (
-            event['type'] == 'checkout.session.completed'
-            or event['type'] == 'checkout.session.async_payment_succeeded'
-    ):
-        fulfill_checkout(event['data']['object']['id'])
+        try:
+            order_id = session.get("metadata", {}).get("order_id")
+            order = Order.objects.get(id=order_id)
+            fulfill_checkout(order)  # Process the order after payment
+        except Order.DoesNotExist:
+            return HttpResponse(status=400)  # Order not found
 
     return HttpResponse(status=200)
 
 
-def fulfill_checkout(session_id):
-    print("Fulfilling Checkout Session", session_id)
+def fulfill_checkout(order):
+    print(order)
+    order.update_after_payment()
 
-  # Retrieve the Checkout Session from the API with line_items expanded
-    checkout_session = stripe.checkout.Session.retrieve(session_id, expand=['line_items'])
+
