@@ -1,5 +1,5 @@
 from django.urls import path
-from products.views import basket_add, basket_remove, ProductsListView
+from products.views import basket_add, basket_remove, ProductsListView, ProductListView
 
 # from products.views import products
 
@@ -12,6 +12,7 @@ urlpatterns = [
     path('page/<int:page>/', ProductsListView.as_view(), name='paginator'),
     path('baskets/add/<int:product_id>/', basket_add, name='basket_add'),
     path('baskets/remove/<int:basket_id>/', basket_remove, name='basket_remove'),
+    path('<int:product_id>/', ProductListView.as_view(), name='product'),
 
 ]
 

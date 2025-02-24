@@ -55,7 +55,7 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
 # DOMAIN_NAME = 'http://localhost:8000'  # для формирования полного пути  verification_link в users.models для верификации почты
-DOMAIN_NAME = '127.0.0.1:8000'
+DOMAIN_NAME = 'http://127.0.0.1:8000'
 # Application definition
 
 INSTALLED_APPS = [
@@ -273,7 +273,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 2  # это id строки в таблице django_site
+SITE_ID = 4  # это id строки в таблице django_site
+
 
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
@@ -305,3 +306,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 3
 }
+
+
+# Stripe
+
+STRIPE_PUBLIC_KEY = 'pk_test_51QtB7pC5VVUrKEK7GXMItn3NudhUsjtzZWqo3RcktsMz8v7RJ0CtRAPqrjRyFOr1H0hs4nTAm58bLRE1oCUlbJJG000lDR2LTg'
+STRIPE_SECRET_KEY = 'sk_test_51QtB7pC5VVUrKEK7VrosuP7D5DTuDbi7g6ZYftFPkcwxXY6LJ0zaKbysgI81ckfVG02SQJa29Ma7uREIVsr6AUix007rNWCYjP'
+STRIPE_WEBHOOK_SECRET = 'whsec_4e9420b21823782053850242cf4e7955cc04d9725d7b9c953dc4f5c705184ebe'
+

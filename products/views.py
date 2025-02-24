@@ -14,13 +14,6 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
 
-def test_upload():
-    # Create a test file
-    path = default_storage.save('test-media/test.txt', ContentFile('test content'))
-    print(f"File uploaded to: {path}")
-    print(f"File URL: {default_storage.url(path)}")
-
-
 class IndexView(TitleMixin, TemplateView):
     template_name = 'products/index.html'
     title = 'Store'
@@ -55,6 +48,20 @@ class ProductsListView(TitleMixin, ListView):
         return context
 
 
+class ProductListView(TitleMixin, ListView):
+    model = Product
+    template_name = 'products/product.html'
+    title = 'Store - item'
+
+    def get_queryset(self):
+        queryset = super(ProductListView, self).get_queryset()
+        product_id = self.kwargs.get('product_id')
+        return queryset.filter(id=product_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['categories'] = ProductCategory.objects.all()
+        return context
 # def products(request, category_id=None, page_number=1):
 #     # if category_id:
 #     #     category = ProductCategory.objects.get(id=category_id)
