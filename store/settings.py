@@ -159,8 +159,8 @@ DATABASES = {
     }
 }
 '''
-# Render Postgre database
 
+# Render Postgre database
 
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL'))
