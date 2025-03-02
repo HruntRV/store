@@ -57,7 +57,7 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
 # DOMAIN_NAME = 'http://localhost:8000'  # для формирования полного пути  verification_link в users.models для верификации почты
-DOMAIN_NAME = 'http://127.0.0.1:8000'
+DOMAIN_NAME = 'https://store-g7lc.onrender.com'
 # Application definition
 
 INSTALLED_APPS = [
