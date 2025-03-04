@@ -47,8 +47,7 @@ class Product(models.Model):
         stripe_product_price = stripe.Price.create(
             product=stripe_product['id'],
             unit_amount=round(self.price*100),
-            currency='uah',
-            type='one_time',
+            currency='UAH',
         )
         return stripe_product_price
 

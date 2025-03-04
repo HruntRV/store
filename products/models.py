@@ -48,7 +48,6 @@ class Product(models.Model):
             product=stripe_product['id'],
             unit_amount=round(self.price*100),
             currency='uah',
-            type='one_time',
         )
         return stripe_product_price
 
