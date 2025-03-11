@@ -276,7 +276,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 4  # это id строки в таблице django_site
+SITE_ID = 7  # это id строки с сайтом на котором мы работаем (локально или домен, где деплоем)в таблице django_site
 
 
 SOCIALACCOUNT_PROVIDERS = {
